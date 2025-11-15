@@ -29,11 +29,71 @@ body {
 
 /* ===== HEADER ===== */
 .game-header {
-  background: linear-gradient(135deg, var(--color-pumpkin), var(--color-tomato));
+  background: linear-gradient(to top, var(--color-tomato), var(--color-pumpkin));
   color: white;
-  padding: 20px;
-  text-align: center;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.header-logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
+.header-lang {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Мовна капсула */
+.lang-capsule {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+  backdrop-filter: blur(10px);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95em;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.lang-btn:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.lang-btn.active {
+  background: white;
+  color: var(--color-pumpkin);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .game-title {
