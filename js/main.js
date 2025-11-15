@@ -1,14 +1,17 @@
 /**
- * Main Entry Point v2.2
+ * Main Entry Point v2.5
  * Ініціалізація гри Spot the Same
+ * + Мультимовність (UA/EN/RU/ES)
  */
 
 import { AssetsLoader } from './assets-loader.js';
 import { Game } from './game.js';
+import { translations, t, detectLanguage } from './translations.js';
 
 // Глобальний стан додатку
 const appState = {
   currentScreen: 'loading',
+  currentLang: 'ua',
   config: {
     players: 1,
     difficulty: 'medium',
@@ -19,12 +22,73 @@ const appState = {
 };
 
 /**
+ * Оновити всі тексти на сторінці
+ */
+function updateTexts(lang) {
+  console.log(`🌍 Updating texts to: ${lang}`);
+  
+  // Оновлюємо всі елементи з data-i18n
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const translated = t(key, lang);
+    
+    // Якщо це кнопка з HTML всередині
+    if (el.querySelector('small')) {
+      const span = el.querySelector('span[data-i18n]');
+      if (span) {
+        span.textContent = t(span.getAttribute('data-i18n'), lang);
+      }
+    } else {
+      el.textContent = translated;
+    }
+  });
+  
+  appState.currentLang = lang;
+  console.log(`✅ Texts updated to: ${lang}`);
+}
+
+/**
+ * Ініціалізація системи мов
+ */
+function initLanguages() {
+  console.log('🌍 Initializing languages...');
+  
+  const detectedLang = detectLanguage();
+  appState.currentLang = detectedLang;
+  console.log(`📍 Detected language: ${detectedLang}`);
+  
+  const langButtons = document.querySelectorAll('.lang-btn');
+  langButtons.forEach(btn => {
+    const btnLang = btn.getAttribute('data-lang');
+    if (btnLang === detectedLang) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+    
+    btn.addEventListener('click', () => {
+      langButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const newLang = btn.getAttribute('data-lang');
+      updateTexts(newLang);
+    });
+  });
+  
+  updateTexts(detectedLang);
+  console.log('✅ Languages initialized');
+}
+
+/**
  * Ініціалізація додатку
  */
 async function init() {
-  console.log('🎮 Initializing Spot the Same v2.2...');
+  console.log('🎮 Initializing Spot the Same v2.5...');
   
   try {
+    // Ініціалізуємо мови
+    initLanguages();
+    
     // Завантажуємо ресурси
     await loadAssets();
     
