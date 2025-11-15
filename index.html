@@ -21,13 +21,26 @@
   <!-- Главное меню -->
   <div id="menu-screen" class="screen hidden">
     <header class="game-header">
-      <h1 class="game-title">Spot the Same</h1>
-      <p class="game-subtitle">MindWorld School</p>
+      <div class="header-logo">
+        <img src="images/logo.png" alt="MindWorld School" class="logo-img">
+      </div>
+      <div class="header-center">
+        <h1 class="game-title" data-i18n="gameTitle">Spot the Same</h1>
+        <p class="game-subtitle" data-i18n="gameSubtitle">MindWorld School</p>
+      </div>
+      <div class="header-lang">
+        <div class="lang-capsule">
+          <button class="lang-btn active" data-lang="ua">UA</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+      </div>
     </header>
 
     <main class="setup-screen">
       <div class="setup-section">
-        <h3>Количество игроков</h3>
+        <h3 data-i18n="playersCount">Количество игроков</h3>
         <div class="setup-buttons">
           <button class="btn active" data-players="1">1</button>
           <button class="btn" data-players="2">2</button>
@@ -37,21 +50,24 @@
       </div>
 
       <div class="setup-section">
-        <h3>Сложность</h3>
+        <h3 data-i18n="difficulty">Сложность</h3>
         <div class="setup-buttons">
           <button class="btn" data-difficulty="easy">
-            Легко<br><small>13 карт • 4 символа</small>
+            <span data-i18n="difficultyEasy">Легко</span><br>
+            <small>13 <span data-i18n="cardsInfo">карт • 4 символа</span></small>
           </button>
           <button class="btn active" data-difficulty="medium">
-            Средне<br><small>31 карта • 6 символов</small>
+            <span data-i18n="difficultyMedium">Средне</span><br>
+            <small>31 <span data-i18n="cardsInfo">карта • 6 символов</span></small>
           </button>
           <button class="btn" data-difficulty="hard">
-            Сложно<br><small>55 карт • 8 символов</small>
+            <span data-i18n="difficultyHard">Сложно</span><br>
+            <small>55 <span data-i18n="cardsInfo">карт • 8 символов</span></small>
           </button>
         </div>
       </div>
 
-      <button class="btn-primary btn-start">Начать игру</button>
+      <button class="btn-primary btn-start" data-i18n="startGame">Начать игру</button>
     </main>
   </div>
 
