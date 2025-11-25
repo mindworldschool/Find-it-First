@@ -6,7 +6,7 @@
 export const translations = {
   ua: {
     // Header
-    gameTitle: "Знайди Перше",
+    gameTitle: "Знайди Першим",
     gameSubtitle: "MindWorld School",
     
     // Menu
