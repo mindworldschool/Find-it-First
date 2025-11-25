@@ -237,13 +237,10 @@ export function detectLanguage() {
   }
 
   // 2. Спробувати визначити з поточного URL шляху (наприклад, /en/finditfirst)
+  // Примітка: українська мова використовується за замовчуванням без префікса (наприклад, /finditfirst)
   const currentPath = window.location.pathname.toLowerCase();
   console.log(`🌍 Checking current path: ${currentPath}`);
 
-  if (currentPath.includes('/ua/') || currentPath.includes('/uk/')) {
-    console.log('🌍 Language detected from current path: ua');
-    return 'ua';
-  }
   if (currentPath.includes('/en/') || currentPath.includes('/english/')) {
     console.log('🌍 Language detected from current path: en');
     return 'en';
