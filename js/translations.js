@@ -236,7 +236,28 @@ export function detectLanguage() {
     return urlLang;
   }
 
-  // 2. Якщо відкрито в iframe, спробувати визначити з URL батьківського вікна
+  // 2. Спробувати визначити з поточного URL шляху (наприклад, /en/finditfirst)
+  const currentPath = window.location.pathname.toLowerCase();
+  console.log(`🌍 Checking current path: ${currentPath}`);
+
+  if (currentPath.includes('/ua/') || currentPath.includes('/uk/')) {
+    console.log('🌍 Language detected from current path: ua');
+    return 'ua';
+  }
+  if (currentPath.includes('/en/') || currentPath.includes('/english/')) {
+    console.log('🌍 Language detected from current path: en');
+    return 'en';
+  }
+  if (currentPath.includes('/ru/') || currentPath.includes('/russian/')) {
+    console.log('🌍 Language detected from current path: ru');
+    return 'ru';
+  }
+  if (currentPath.includes('/es/') || currentPath.includes('/spanish/')) {
+    console.log('🌍 Language detected from current path: es');
+    return 'es';
+  }
+
+  // 3. Якщо відкрито в iframe, спробувати визначити з URL батьківського вікна
   try {
     if (window.parent && window.parent !== window) {
       // Спробувати отримати URL батьківського вікна (працює якщо той самий домен)
@@ -265,7 +286,7 @@ export function detectLanguage() {
     console.log('🌍 Cannot access parent URL (cross-origin), checking referrer...');
   }
 
-  // 3. Спробувати визначити з referrer URL
+  // 4. Спробувати визначити з referrer URL
   const referrer = document.referrer.toLowerCase();
   if (referrer) {
     console.log(`🌍 Checking referrer: ${referrer}`);
@@ -289,7 +310,7 @@ export function detectLanguage() {
     }
   }
 
-  // 4. Спробувати визначити з мови браузера
+  // 5. Спробувати визначити з мови браузера
   const browserLang = navigator.language.toLowerCase();
   console.log(`🌍 Browser language: ${browserLang}`);
 
@@ -310,7 +331,7 @@ export function detectLanguage() {
     return 'en';
   }
 
-  // 5. За замовчуванням українська
+  // 6. За замовчуванням українська
   console.log('🌍 Using default language: ua');
   return 'ua';
 }
