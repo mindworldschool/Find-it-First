@@ -232,35 +232,85 @@ export function detectLanguage() {
   const urlParams = new URLSearchParams(window.location.search);
   const urlLang = urlParams.get('lang');
   if (urlLang && translations[urlLang]) {
+    console.log(`🌍 Language detected from URL parameter: ${urlLang}`);
     return urlLang;
   }
 
-  // 2. Спробувати визначити з referrer URL
+  // 2. Якщо відкрито в iframe, спробувати визначити з URL батьківського вікна
+  try {
+    if (window.parent && window.parent !== window) {
+      // Спробувати отримати URL батьківського вікна (працює якщо той самий домен)
+      const parentUrl = window.parent.location.href.toLowerCase();
+      console.log(`🌍 Checking parent URL: ${parentUrl}`);
+
+      if (parentUrl.includes('/ua/') || parentUrl.includes('/uk/') || parentUrl.includes('.ua/') || parentUrl.includes('lang=ua') || parentUrl.includes('lang=uk')) {
+        console.log('🌍 Language detected from parent URL: ua');
+        return 'ua';
+      }
+      if (parentUrl.includes('/en/') || parentUrl.includes('/english/') || parentUrl.includes('lang=en')) {
+        console.log('🌍 Language detected from parent URL: en');
+        return 'en';
+      }
+      if (parentUrl.includes('/ru/') || parentUrl.includes('/russian/') || parentUrl.includes('.ru/') || parentUrl.includes('lang=ru')) {
+        console.log('🌍 Language detected from parent URL: ru');
+        return 'ru';
+      }
+      if (parentUrl.includes('/es/') || parentUrl.includes('/spanish/') || parentUrl.includes('.es/') || parentUrl.includes('lang=es')) {
+        console.log('🌍 Language detected from parent URL: es');
+        return 'es';
+      }
+    }
+  } catch (e) {
+    // Cross-origin iframe - не маємо доступу до parent.location
+    console.log('🌍 Cannot access parent URL (cross-origin), checking referrer...');
+  }
+
+  // 3. Спробувати визначити з referrer URL
   const referrer = document.referrer.toLowerCase();
   if (referrer) {
+    console.log(`🌍 Checking referrer: ${referrer}`);
+
     // Check for language indicators in referrer URL
     if (referrer.includes('/ua/') || referrer.includes('/uk/') || referrer.includes('.ua/') || referrer.includes('lang=ua') || referrer.includes('lang=uk')) {
+      console.log('🌍 Language detected from referrer: ua');
       return 'ua';
     }
-    if (referrer.includes('/en/') || referrer.includes('.com/') || referrer.includes('lang=en')) {
+    if (referrer.includes('/en/') || referrer.includes('/english/') || referrer.includes('lang=en')) {
+      console.log('🌍 Language detected from referrer: en');
       return 'en';
     }
-    if (referrer.includes('/ru/') || referrer.includes('.ru/') || referrer.includes('lang=ru')) {
+    if (referrer.includes('/ru/') || referrer.includes('/russian/') || referrer.includes('.ru/') || referrer.includes('lang=ru')) {
+      console.log('🌍 Language detected from referrer: ru');
       return 'ru';
     }
-    if (referrer.includes('/es/') || referrer.includes('.es/') || referrer.includes('lang=es')) {
+    if (referrer.includes('/es/') || referrer.includes('/spanish/') || referrer.includes('.es/') || referrer.includes('lang=es')) {
+      console.log('🌍 Language detected from referrer: es');
       return 'es';
     }
   }
 
-  // 3. Спробувати визначити з мови браузера
+  // 4. Спробувати визначити з мови браузера
   const browserLang = navigator.language.toLowerCase();
+  console.log(`🌍 Browser language: ${browserLang}`);
 
-  if (browserLang.startsWith('uk')) return 'ua';
-  if (browserLang.startsWith('ru')) return 'ru';
-  if (browserLang.startsWith('es')) return 'es';
-  if (browserLang.startsWith('en')) return 'en';
+  if (browserLang.startsWith('uk')) {
+    console.log('🌍 Language detected from browser: ua');
+    return 'ua';
+  }
+  if (browserLang.startsWith('ru')) {
+    console.log('🌍 Language detected from browser: ru');
+    return 'ru';
+  }
+  if (browserLang.startsWith('es')) {
+    console.log('🌍 Language detected from browser: es');
+    return 'es';
+  }
+  if (browserLang.startsWith('en')) {
+    console.log('🌍 Language detected from browser: en');
+    return 'en';
+  }
 
-  // 4. За замовчуванням українська
+  // 5. За замовчуванням українська
+  console.log('🌍 Using default language: ua');
   return 'ua';
 }
